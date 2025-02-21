@@ -4,15 +4,18 @@
 // Instructor:  Dr. Haddad
 // Assignment:  2
 // IDE Name:    IntelliJ
+
 //******************************************
 /*
+
 Algorithm Design Block
 
 Algorithm title: Partition an array into two disjoint subsets that have the same sum
     of their elements.
+
 Logical steps:
 
-    Step 1: Retreive array from user. Set up two Lists that will store both subsets.
+    Step 1: Retrieve array from user. Set up two Lists that will store both subsets.
     Step 2: If array is empty then return that information to the user.
     Step 3: If array values sum up to be an odd number, let the user know that the partition cannot take place.
     Step 4: If neither are true, then divide the sum of the array values and set that as an integer that will be the target value.
@@ -78,15 +81,17 @@ End;
 import java.util.*;
 public class Partition {
     public static void canPartition(int[] nums) {
+        //variables
         int totalSum = Arrays.stream(nums).sum();
-        List<Integer> subset = new ArrayList<>();
-        List<Integer> remaining = new ArrayList<>();
+        List<Integer> subset1 = new ArrayList<>();
+        List<Integer> subset2 = new ArrayList<>();
         boolean canPartition = false;
-        // If total sum is odd, partitioning is impossible
+        //if array is empty return
         if (totalSum == 0){
             System.out.println("Array is empty");
             return;
         }
+        //if total sum is odd return
         if (totalSum % 2 != 0) {
             System.out.print("\nSet size: " + nums.length +
                     "\nInteger values: ");
@@ -96,53 +101,64 @@ public class Partition {
             System.out.print("\nDisjoint subsets with the same sum: No disjoint subsets with the same sum of their elements found");
             return;
         }
-
+        //target sum is half of total sum
         int targetSum = totalSum / 2;
 
-        // Generate all subsets and check if any has sum = targetSum
-        for (int i = 0; i < nums.length; i++) { // Iterate over all subsets
+        //loop through all values to find subsets
+        for (int i = 0; i < nums.length; i++) {
+            //this tracks the sum of the current subset
             int subsetSum = 0;
 
+            //this runs through the list again, starting at the current i value to find a subset whose sum is half of the total sum
             for (int j = i; j < nums.length; j++) {
+                //if the target sum is reached, break
                 if (subsetSum == targetSum) {
                     break;
                 }
-                if (subset.isEmpty()){
-                    subset.add(nums[j]);
+                //if the subset is empty add the current value to the subset
+                if (subset1.isEmpty()){
+                    subset1.add(nums[j]);
                     subsetSum += nums[j];
                 }
-                else if(subset.size() < j){
-                    subset.add(nums[j]);
+                //if the subset is smaller than the size of the array then add the current value to the subset
+                else if(subset1.size() < j){
+                    subset1.add(nums[j]);
                     subsetSum += nums[j];
                 }
-                else if (subset.get(j-1) != nums[j]) { // Check if jth element is in subset
-                    subset.add(nums[j]);
+                //else, make sure there are no duplicates and then add to the subset
+                else if (subset1.get(j-1) != nums[j]) {
+                    subset1.add(nums[j]);
                     subsetSum += nums[j];
                 }
             }
-
+            //if the target sum is reached, then add remaining values to the second subset
             if (subsetSum == targetSum) {
                 canPartition = true;
-                for (int num : nums) {
-                    if (!subset.contains(num)) {
-                        remaining.add(num);
-                    }
+                //these two loops are an oversight for when a partition is available, but all integers are the same
+                for (int num : nums){
+                    subset2.add(num);
+                }
+                for (Integer integer : subset1) {
+                    subset2.remove(integer);
                 }
                 break;
             }
+            //if not, then clear subset 1 and retry until you have iterated through the entire list
             else{
-                subset.clear();
+                subset1.clear();
             }
         }
+        //if there is a valid partition, then print said results
         if (canPartition) {
             System.out.print("\nSet size: " + nums.length +
                     "\nInteger values: ");
             for (int num : nums) {
                 System.out.print(num + " ");
             }
-            System.out.print("\nDisjoint subsets with the same sum: " + subset +
-                            "\n                                    " + remaining);
+            System.out.print("\nDisjoint subsets with the same sum: " + subset1 +
+                            "\n                                    " + subset2);
         }
+        //if not, then print said results
         else {
             System.out.print("\nSet size: " + nums.length +
                     "\nInteger values: ");
@@ -153,8 +169,10 @@ public class Partition {
         }
     }
     public static void main(String[] args) {
+        //variables
         Scanner sc = new Scanner(System.in);
         int[] nums = new int[0];
+        //loop that controls interface
         while(true){
             System.out.println("\n-----------------MAIN MENU--------------\n" +
                     "1. Read set size (number of integers)\n" +
@@ -162,12 +180,15 @@ public class Partition {
                     "3. Run algorithm and display outputs\n" +
                     "4. Exit program\n\n" +
                     "Enter option number:");
+            //switch that controls choices
             switch(sc.nextInt()){
+                //enter number of integers
                 case 1:
                     sc.nextLine();
                     System.out.println("Enter number of integers:");
                     nums = new int[sc.nextInt()];
                     break;
+                    //enter the value for each integer
                     case 2:
                         sc.nextLine();
                         for (int i = 0; i < nums.length; i++) {
@@ -175,10 +196,12 @@ public class Partition {
                             nums[i] = sc.nextInt();
                         }
                         break;
+                        //run algorithm
                         case 3:
                             sc.nextLine();
                             canPartition(nums);
                             break;
+                            //end program
                             case 4:
                                 System.exit(0);
                                 break;

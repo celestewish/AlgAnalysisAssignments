@@ -8,8 +8,10 @@ import java.util.Scanner;
 // Instructor:  Dr. Haddad
 // Assignment:  2
 // IDE Name:    IntelliJ
+
 //******************************************
 /*
+
 Algorithm Design Block
 
 Algorithm title: Find subscripts that start with a and end with b
