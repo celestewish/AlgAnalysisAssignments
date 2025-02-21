@@ -26,24 +26,24 @@ Logical steps:
 
 Pseudocode syntax:
 
-Algorithm: Find and print smallest number in a list of numbers
-Input: Non-empty List (L) of numbers
-Output: Smallest number in list L
+Algorithm: Find subscripts that start with a and end with b
+Input: String input from user
+Output: Prints subscripts that have been found
 
 Begin
-Read Input String;
-int comparisons = 0;
-List stringList;
+Read Input String
+Integer Comparisons = 0
+List stringList
 for i <- 0 to Input String length do
     if Character at i == A
-        comparisons++;
+        Comparisons++
         for j <- i + 1 to Input String length do
             if Character at j == B
-                comparisons++;
+                Comparisons++
                 Store Substring(i, j + 1) in stringList
         End Loop
 End Loop
-Print Input String, Number of Substrings, List of Substrings, and Number of Comparisons;
+Print Input String, Number of Substrings, List of Substrings, and Number of Comparisons
 End;
 
 ******************************************/
